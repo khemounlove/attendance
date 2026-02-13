@@ -1,0 +1,7 @@
+{
+  "name": "EDU Pro - Student Registration System",
+  "description": "A mobile-responsive student registration platform featuring AI-powered data extraction and management.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
