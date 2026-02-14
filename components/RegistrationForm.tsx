@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { StudentFormData, Sex, Attendance, Student } from '../types';
-import { Save, User, BookOpen, Fingerprint, X, Calendar, Clock } from 'lucide-react';
+import { Save, User, BookOpen, Fingerprint, X, DollarSign, Calendar, Clock } from 'lucide-react';
 
 interface RegistrationFormProps {
   onSubmit: (data: StudentFormData) => void;
@@ -16,6 +16,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit, autoId, i
     name: initialData?.name || '',
     sex: initialData?.sex || Sex.MALE,
     course: initialData?.course || '',
+    price: initialData?.price || 0,
     date: initialData?.date || new Date().toISOString().split('T')[0],
     time: initialData?.time || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
     attendance: initialData?.attendance || {
@@ -34,7 +35,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit, autoId, i
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: name === 'price' ? parseFloat(value) || 0 : value
     }));
   };
 
@@ -93,7 +94,7 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit, autoId, i
           </div>
 
           <div>
-            <label className={labelClass}>Biological Gender</label>
+            <label className={labelClass}>Gender Identity</label>
             <div className="relative">
               <select name="sex" value={formData.sex} onChange={handleChange} className={`${inputClass} appearance-none cursor-pointer`}>
                 {Object.values(Sex).map(s => <option key={s} value={s}>{s}</option>)}
@@ -106,31 +107,36 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({ onSubmit, autoId, i
         </div>
 
         <div className="space-y-6">
-          <div>
-            <label className={labelClass}>Assigned Course</label>
-            <div className="relative">
-              <BookOpen className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 dark:text-slate-600 pointer-events-none" />
-              <input required name="course" value={formData.course} onChange={handleChange} placeholder="e.g. Advanced Mathematics" className={inputClass} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label className={labelClass}>Course Program</label>
+              <div className="relative">
+                <BookOpen className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300 dark:text-slate-600 pointer-events-none" />
+                <input required name="course" value={formData.course} onChange={handleChange} placeholder="Course name" className={inputClass} />
+              </div>
+            </div>
+            <div>
+              <label className={labelClass}>Course Price</label>
+              <div className="relative">
+                <DollarSign className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500 pointer-events-none" />
+                <input required type="number" name="price" value={formData.price} onChange={handleChange} placeholder="0.00" className={inputClass} />
+              </div>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className={labelClass}>Enrollment Date</label>
-              <div className="relative">
-                <input type="date" name="date" value={formData.date} onChange={handleChange} className={`${inputClass} pr-2`} />
-              </div>
+              <input type="date" name="date" value={formData.date} onChange={handleChange} className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>Preferred Time</label>
-              <div className="relative">
-                <input type="time" name="time" value={formData.time} onChange={handleChange} className={`${inputClass} pr-2`} />
-              </div>
+              <input type="time" name="time" value={formData.time} onChange={handleChange} className={inputClass} />
             </div>
           </div>
 
           <div>
-            <label className={labelClass}>Roster Attendance Schedule</label>
+            <label className={labelClass}>Attendance Schedule</label>
             <div className="grid grid-cols-7 gap-1">
               {days.map((day) => (
                 <button

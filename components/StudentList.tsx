@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Student, StudentFormData } from '../types';
-import { Trash2, Book, Calendar, User, Clock, AlertTriangle, Edit3 } from 'lucide-react';
+import { Trash2, Book, Calendar, User, Clock, AlertTriangle, Edit3, DollarSign } from 'lucide-react';
 import RegistrationForm from './RegistrationForm';
 
 interface StudentListProps {
@@ -103,9 +103,15 @@ const StudentList: React.FC<StudentListProps> = ({ students, onDelete, onSave, o
                   </div>
 
                   <div className="flex-1 space-y-4">
-                    <div className="flex items-center gap-3 text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/40 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
-                      <Book className="w-4 h-4 text-indigo-400" />
-                      <span className="text-sm font-bold truncate tracking-tight">{student.course}</span>
+                    <div className="flex items-center justify-between gap-3 text-slate-600 dark:text-slate-400 bg-slate-50 dark:bg-slate-800/40 p-3 rounded-2xl border border-slate-100 dark:border-slate-800">
+                      <div className="flex items-center gap-3 truncate">
+                        <Book className="w-4 h-4 text-indigo-400" />
+                        <span className="text-sm font-bold truncate tracking-tight">{student.course}</span>
+                      </div>
+                      <div className="flex items-center gap-1 px-3 py-1 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+                        <DollarSign className="w-3 h-3 text-emerald-500" />
+                        <span className="text-xs font-black text-slate-900 dark:text-white">{student.price.toLocaleString()}</span>
+                      </div>
                     </div>
                     
                     <div className="flex flex-wrap gap-1.5">

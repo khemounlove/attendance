@@ -21,6 +21,7 @@ export interface Student {
   name: string;
   sex: Sex;
   course: string;
+  price: number;
   date: string;
   time: string;
   attendance: Attendance;
@@ -34,6 +35,7 @@ export interface APIExtractionResult {
   name?: string;
   sex?: Sex;
   course?: string;
+  price?: number;
   date?: string;
   time?: string;
   attendance?: Attendance;
